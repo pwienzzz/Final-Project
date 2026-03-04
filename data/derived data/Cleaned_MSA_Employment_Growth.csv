@@ -1,0 +1,394 @@
+area_fips,area_title,agglvl_code,oty_month3_emplvl_pct_chg
+C1018,"Abilene, TX MSA",40,-0.2
+C1038,"Aguadilla, PR MSA",40,0.0
+C1042,"Akron, OH MSA",40,-0.5
+C1050,"Albany, GA MSA",40,-1.8
+C1054,"Albany, OR MSA",40,0.5
+C1058,"Albany-Schenectady-Troy, NY MSA",40,1.3
+C1074,"Albuquerque, NM MSA",40,-0.3
+C1078,"Alexandria, LA MSA",40,0.4
+C1090,"Allentown-Bethlehem-Easton, PA-NJ MSA",40,1.7
+C1102,"Altoona, PA MSA",40,0.7
+C1110,"Amarillo, TX MSA",40,1.1
+C1118,"Ames, IA MSA",40,-0.9
+C1120,"Amherst Town-Northampton, MA MSA",40,-0.6
+C1126,"Anchorage, AK MSA",40,0.8
+C1146,"Ann Arbor, MI MSA",40,-0.1
+C1150,"Anniston-Oxford, AL MSA",40,-1.6
+C1154,"Appleton, WI MSA",40,-0.1
+C1164,"Arecibo, PR MSA",40,-3.2
+C1170,"Asheville, NC MSA",40,-2.9
+C1202,"Athens-Clarke County, GA MSA",40,1.8
+C1206,"Atlanta-Sandy Springs-Roswell, GA MSA",40,-0.2
+C1210,"Atlantic City-Hammonton, NJ MSA",40,0.0
+C1222,"Auburn-Opelika, AL MSA",40,1.5
+C1226,"Augusta-Richmond County, GA-SC MSA",40,0.4
+C1242,"Austin-Round Rock-San Marcos, TX MSA",40,2.0
+C1254,"Bakersfield-Delano, CA MSA",40,-0.9
+C1258,"Baltimore-Columbia-Towson, MD MSA",40,-0.2
+C1262,"Bangor, ME MSA",40,-1.9
+C1270,"Barnstable Town, MA MSA",40,-0.2
+C1294,"Baton Rouge, LA MSA",40,-0.5
+C1298,"Battle Creek, MI MSA",40,1.6
+C1302,"Bay City, MI MSA",40,0.8
+C1314,"Beaumont-Port Arthur, TX MSA",40,1.1
+C1322,"Beckley, WV MSA",40,0.1
+C1338,"Bellingham, WA MSA",40,2.0
+C1346,"Bend, OR MSA",40,-0.1
+C1374,"Billings, MT MSA",40,0.4
+C1378,"Binghamton, NY MSA",40,0.0
+C1382,"Birmingham, AL MSA",40,0.0
+C1390,"Bismarck, ND MSA",40,0.1
+C1398,"Blacksburg-Christiansburg-Radford, VA MSA",40,-3.3
+C1401,"Bloomington, IL MSA",40,-3.5
+C1402,"Bloomington, IN MSA",40,0.3
+C1426,"Boise City, ID MSA",40,2.1
+C1446,"Boston-Cambridge-Newton, MA-NH MSA",40,-1.2
+C1450,"Boulder, CO MSA",40,-2.3
+C1454,"Bowling Green, KY MSA",40,0.3
+C1458,"Bozeman, MT MSA",40,1.5
+C1474,"Bremerton-Silverdale-Port Orchard, WA MSA",40,1.8
+C1486,"Bridgeport-Stamford-Danbury, CT MSA",40,0.1
+C1518,"Brownsville-Harlingen, TX MSA",40,-2.2
+C1526,"Brunswick-St. Simons, GA MSA",40,1.1
+C1538,"Buffalo-Cheektowaga, NY MSA",40,0.1
+C1550,"Burlington, NC MSA",40,-2.5
+C1554,"Burlington-South Burlington, VT MSA",40,-0.9
+C1594,"Canton-Massillon, OH MSA",40,-0.9
+C1598,"Cape Coral-Fort Myers, FL MSA",40,0.5
+C1602,"Cape Girardeau, MO-IL MSA",40,0.4
+C1618,"Carson City, NV MSA",40,0.9
+C1622,"Casper, WY MSA",40,-0.1
+C1630,"Cedar Rapids, IA MSA",40,-0.6
+C1654,"Chambersburg, PA MSA",40,1.8
+C1658,"Champaign-Urbana, IL MSA",40,-0.6
+C1662,"Charleston, WV MSA",40,-2.2
+C1670,"Charleston-North Charleston, SC MSA",40,1.7
+C1674,"Charlotte-Concord-Gastonia, NC-SC MSA",40,1.1
+C1682,"Charlottesville, VA MSA",40,1.3
+C1686,"Chattanooga, TN-GA MSA",40,-1.6
+C1694,"Cheyenne, WY MSA",40,1.9
+C1698,"Chicago-Naperville-Elgin, IL-IN MSA",40,0.4
+C1702,"Chico, CA MSA",40,-0.7
+C1714,"Cincinnati, OH-KY-IN MSA",40,0.4
+C1730,"Clarksville, TN-KY MSA",40,0.5
+C1741,"Cleveland, OH MSA",40,-1.0
+C1742,"Cleveland, TN MSA",40,-1.8
+C1766,"Coeur d'Alene, ID MSA",40,1.5
+C1778,"College Station-Bryan, TX MSA",40,1.4
+C1782,"Colorado Springs, CO MSA",40,-0.9
+C1786,"Columbia, MO MSA",40,1.1
+C1790,"Columbia, SC MSA",40,0.5
+C1798,"Columbus, GA-AL MSA",40,0.1
+C1802,"Columbus, IN MSA",40,-1.9
+C1814,"Columbus, OH MSA",40,1.7
+C1858,"Corpus Christi, TX MSA",40,1.4
+C1870,"Corvallis, OR MSA",40,0.2
+C1888,"Crestview-Fort Walton Beach-Destin, FL MSA",40,0.2
+C1910,"Dallas-Fort Worth-Arlington, TX MSA",40,0.7
+C1914,"Dalton, GA MSA",40,-2.9
+C1930,"Daphne-Fairhope-Foley, AL MSA",40,3.1
+C1934,"Davenport-Moline-Rock Island, IA-IL MSA",40,0.7
+C1943,"Dayton-Kettering-Beavercreek, OH MSA",40,0.9
+C1946,"Decatur, AL MSA",40,2.6
+C1950,"Decatur, IL MSA",40,-0.8
+C1966,"Deltona-Daytona Beach-Ormond Beach, FL MSA",40,0.7
+C1974,"Denver-Aurora-Centennial, CO MSA",40,-0.6
+C1978,"Des Moines-West Des Moines, IA MSA",40,-0.5
+C1982,"Detroit-Warren-Dearborn, MI MSA",40,-0.8
+C2002,"Dothan, AL MSA",40,0.2
+C2010,"Dover, DE MSA",40,0.1
+C2022,"Dubuque, IA MSA",40,-1.3
+C2026,"Duluth, MN-WI MSA",40,-1.2
+C2050,"Durham-Chapel Hill, NC MSA",40,-0.4
+C2058,"Eagle Pass, TX MSA",40,2.6
+C2074,"Eau Claire, WI MSA",40,1.6
+C2094,"El Centro, CA MSA",40,-0.7
+C2106,"Elizabethtown, KY MSA",40,0.8
+C2114,"Elkhart-Goshen, IN MSA",40,0.4
+C2130,"Elmira, NY MSA",40,-0.3
+C2134,"El Paso, TX MSA",40,2.3
+C2142,"Enid, OK MSA",40,0.3
+C2150,"Erie, PA MSA",40,0.1
+C2166,"Eugene-Springfield, OR MSA",40,-0.5
+C2178,"Evansville, IN MSA",40,0.8
+C2182,"Fairbanks-College, AK MSA",40,0.4
+C2202,"Fargo, ND-MN MSA",40,1.1
+C2214,"Farmington, NM MSA",40,4.0
+C2218,"Fayetteville, NC MSA",40,-0.4
+C2222,"Fayetteville-Springdale-Rogers, AR MSA",40,2.8
+C2238,"Flagstaff, AZ MSA",40,0.5
+C2242,"Flint, MI MSA",40,0.4
+C2250,"Florence, SC MSA",40,0.6
+C2252,"Florence-Muscle Shoals, AL MSA",40,0.6
+C2254,"Fond du Lac, WI MSA",40,-1.0
+C2266,"Fort Collins-Loveland, CO MSA",40,-3.5
+C2290,"Fort Smith, AR-OK MSA",40,-2.0
+C2306,"Fort Wayne, IN MSA",40,0.1
+C2342,"Fresno, CA MSA",40,-0.1
+C2346,"Gadsden, AL MSA",40,0.5
+C2354,"Gainesville, FL MSA",40,0.6
+C2358,"Gainesville, GA MSA",40,1.4
+C2390,"Gettysburg, PA MSA",40,-0.5
+C2402,"Glens Falls, NY MSA",40,-0.7
+C2414,"Goldsboro, NC MSA",40,-2.2
+C2422,"Grand Forks, ND-MN MSA",40,-0.3
+C2426,"Grand Island, NE MSA",40,-1.6
+C2430,"Grand Junction, CO MSA",40,-0.9
+C2434,"Grand Rapids-Wyoming-Kentwood, MI MSA",40,0.0
+C2442,"Grants Pass, OR MSA",40,-2.3
+C2450,"Great Falls, MT MSA",40,-2.3
+C2454,"Greeley, CO MSA",40,3.1
+C2458,"Green Bay, WI MSA",40,1.3
+C2466,"Greensboro-High Point, NC MSA",40,1.4
+C2478,"Greenville, NC MSA",40,-1.2
+C2486,"Greenville-Anderson-Greer, SC MSA",40,0.9
+C2502,"Guayama, PR MSA",40,4.0
+C2506,"Gulfport-Biloxi, MS MSA",40,0.1
+C2518,"Hagerstown-Martinsburg, MD-WV MSA",40,0.6
+C2522,"Hammond, LA MSA",40,-0.1
+C2526,"Hanford-Corcoran, CA MSA",40,4.4
+C2542,"Harrisburg-Carlisle, PA MSA",40,0.1
+C2550,"Harrisonburg, VA MSA",40,1.0
+C2554,"Hartford-West Hartford-East Hartford, CT MSA",40,1.6
+C2562,"Hattiesburg, MS MSA",40,0.8
+C2574,"Helena, MT MSA",40,-0.6
+C2586,"Hickory-Lenoir-Morganton, NC MSA",40,-0.3
+C2594,"Hilton Head Island-Bluffton-Port Royal, SC MSA",40,0.5
+C2598,"Hinesville, GA MSA",40,-1.4
+C2614,"Homosassa Springs, FL MSA",40,1.2
+C2630,"Hot Springs, AR MSA",40,2.2
+C2638,"Houma-Bayou Cane-Thibodaux, LA MSA",40,-0.2
+C2642,"Houston-Pasadena-The Woodlands, TX MSA",40,0.7
+C2658,"Huntington-Ashland, WV-KY-OH MSA",40,0.7
+C2662,"Huntsville, AL MSA",40,2.0
+C2682,"Idaho Falls, ID MSA",40,0.9
+C2690,"Indianapolis-Carmel-Greenwood, IN MSA",40,0.4
+C2698,"Iowa City, IA MSA",40,0.6
+C2706,"Ithaca, NY MSA",40,-0.4
+C2710,"Jackson, MI MSA",40,-1.1
+C2714,"Jackson, MS MSA",40,-0.5
+C2718,"Jackson, TN MSA",40,0.8
+C2726,"Jacksonville, FL MSA",40,-0.2
+C2734,"Jacksonville, NC MSA",40,-1.2
+C2750,"Janesville-Beloit, WI MSA",40,0.2
+C2762,"Jefferson City, MO MSA",40,-0.4
+C2774,"Johnson City, TN MSA",40,-1.1
+C2778,"Johnstown, PA MSA",40,-1.3
+C2786,"Jonesboro, AR MSA",40,0.6
+C2790,"Joplin, MO-KS MSA",40,-0.3
+C2798,"Kahului-Wailuku, HI MSA",40,0.8
+C2802,"Kalamazoo-Portage, MI MSA",40,1.3
+C2810,"Kankakee, IL MSA",40,-0.1
+C2814,"Kansas City, MO-KS MSA",40,-0.4
+C2842,"Kennewick-Richland, WA MSA",40,2.7
+C2845,"Kenosha, WI MSA",40,2.6
+C2866,"Killeen-Temple, TX MSA",40,0.6
+C2870,"Kingsport-Bristol, TN-VA MSA",40,2.5
+C2874,"Kingston, NY MSA",40,2.0
+C2888,"Kiryas Joel-Poughkeepsie-Newburgh, NY MSA",40,0.9
+C2894,"Knoxville, TN MSA",40,0.6
+C2902,"Kokomo, IN MSA",40,-5.6
+C2910,"La Crosse-Onalaska, WI-MN MSA",40,0.8
+C2918,"Lafayette, LA MSA",40,2.1
+C2920,"Lafayette-West Lafayette, IN MSA",40,-0.7
+C2934,"Lake Charles, LA MSA",40,0.8
+C2942,"Lake Havasu City-Kingman, AZ MSA",40,-0.5
+C2946,"Lakeland-Winter Haven, FL MSA",40,1.8
+C2954,"Lancaster, PA MSA",40,0.9
+C2962,"Lansing-East Lansing, MI MSA",40,1.2
+C2970,"Laredo, TX MSA",40,1.2
+C2974,"Las Cruces, NM MSA",40,2.3
+C2982,"Las Vegas-Henderson-North Las Vegas, NV MSA",40,0.3
+C2994,"Lawrence, KS MSA",40,-1.5
+C3002,"Lawton, OK MSA",40,-1.2
+C3014,"Lebanon, PA MSA",40,0.0
+C3030,"Lewiston, ID-WA MSA",40,-1.5
+C3034,"Lewiston-Auburn, ME MSA",40,-0.6
+C3046,"Lexington-Fayette, KY MSA",40,1.0
+C3050,"Lexington Park, MD MSA",40,-2.4
+C3062,"Lima, OH MSA",40,0.9
+C3070,"Lincoln, NE MSA",40,0.9
+C3078,"Little Rock-North Little Rock-Conway, AR MSA",40,0.4
+C3086,"Logan, UT-ID MSA",40,1.0
+C3098,"Longview, TX MSA",40,0.1
+C3102,"Longview-Kelso, WA MSA",40,-0.9
+C3108,"Los Angeles-Long Beach-Anaheim, CA MSA",40,0.2
+C3114,"Louisville/Jefferson County, KY-IN MSA",40,-0.6
+C3118,"Lubbock, TX MSA",40,0.6
+C3134,"Lynchburg, VA MSA",40,0.3
+C3142,"Macon-Bibb County, GA MSA",40,0.3
+C3154,"Madison, WI MSA",40,0.3
+C3170,"Manchester-Nashua, NH MSA",40,-1.6
+C3174,"Manhattan, KS MSA",40,-0.7
+C3186,"Mankato, MN MSA",40,-0.3
+C3190,"Mansfield, OH MSA",40,-1.1
+C3242,"Mayaguez, PR MSA",40,-0.3
+C3258,"McAllen-Edinburg-Mission, TX MSA",40,1.0
+C3278,"Medford, OR MSA",40,0.4
+C3282,"Memphis, TN-MS-AR MSA",40,-2.0
+C3290,"Merced, CA MSA",40,0.4
+C3310,"Miami-Fort Lauderdale-West Palm Beach, FL MSA",40,0.9
+C3314,"Michigan City-La Porte, IN MSA",40,0.1
+C3322,"Midland, MI MSA",40,0.4
+C3326,"Midland, TX MSA",40,2.0
+C3334,"Milwaukee-Waukesha, WI MSA",40,-0.2
+C3346,"Minneapolis-St. Paul-Bloomington, MN-WI MSA",40,-0.1
+C3350,"Minot, ND MSA",40,-0.6
+C3354,"Missoula, MT MSA",40,-0.7
+C3366,"Mobile, AL MSA",40,-0.1
+C3370,"Modesto, CA MSA",40,0.6
+C3374,"Monroe, LA MSA",40,0.9
+C3378,"Monroe, MI MSA",40,-1.8
+C3386,"Montgomery, AL MSA",40,0.2
+C3406,"Morgantown, WV MSA",40,0.2
+C3410,"Morristown, TN MSA",40,-1.5
+C3458,"Mount Vernon-Anacortes, WA MSA",40,1.9
+C3462,"Muncie, IN MSA",40,-1.1
+C3474,"Muskegon-Norton Shores, MI MSA",40,-2.1
+C3482,"Myrtle Beach-Conway-North Myrtle Beach, SC MSA",40,0.5
+C3490,"Napa, CA MSA",40,-2.1
+C3494,"Naples-Marco Island, FL MSA",40,0.1
+C3498,"Nashville-Davidson--Murfreesboro--Franklin, TN MSA",40,-0.9
+C3530,"New Haven, CT MSA",40,-1.7
+C3538,"New Orleans-Metairie, LA MSA",40,-0.1
+C3562,"New York-Newark-Jersey City, NY-NJ MSA",40,0.2
+C3566,"Niles, MI MSA",40,-1.5
+C3584,"North Port-Bradenton-Sarasota, FL MSA",40,1.1
+C3598,"Norwich-New London-Willimantic, CT MSA",40,0.7
+C3610,"Ocala, FL MSA",40,1.7
+C3622,"Odessa, TX MSA",40,0.4
+C3626,"Ogden, UT MSA",40,0.3
+C3642,"Oklahoma City, OK MSA",40,0.5
+C3650,"Olympia-Lacey-Tumwater, WA MSA",40,0.4
+C3654,"Omaha, NE-IA MSA",40,0.9
+C3674,"Orlando-Kissimmee-Sanford, FL MSA",40,0.7
+C3678,"Oshkosh-Neenah, WI MSA",40,-0.4
+C3698,"Owensboro, KY MSA",40,1.9
+C3710,"Oxnard-Thousand Oaks-Ventura, CA MSA",40,0.5
+C3714,"Paducah, KY-IL MSA",40,0.7
+C3734,"Palm Bay-Melbourne-Titusville, FL MSA",40,0.7
+C3746,"Panama City-Panama City Beach, FL MSA",40,1.1
+C3762,"Parkersburg-Vienna, WV MSA",40,-0.7
+C3786,"Pensacola-Ferry Pass-Brent, FL MSA",40,1.0
+C3790,"Peoria, IL MSA",40,-2.2
+C3798,"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD MSA",40,0.8
+C3806,"Phoenix-Mesa-Chandler, AZ MSA",40,0.0
+C3824,"Pinehurst-Southern Pines, NC MSA",40,4.7
+C3830,"Pittsburgh, PA MSA",40,0.1
+C3834,"Pittsfield, MA MSA",40,-1.1
+C3854,"Pocatello, ID MSA",40,0.4
+C3866,"Ponce, PR MSA",40,2.0
+C3886,"Portland-South Portland, ME MSA",40,-0.3
+C3890,"Portland-Vancouver-Hillsboro, OR-WA MSA",40,-0.7
+C3894,"Port St. Lucie, FL MSA",40,1.7
+C3915,"Prescott Valley-Prescott, AZ MSA",40,-0.5
+C3930,"Providence-Warwick, RI-MA MSA",40,0.1
+C3934,"Provo-Orem-Lehi, UT MSA",40,1.1
+C3938,"Pueblo, CO MSA",40,-1.6
+C3946,"Punta Gorda, FL MSA",40,1.5
+C3954,"Racine-Mount Pleasant, WI MSA",40,-1.0
+C3958,"Raleigh-Cary, NC MSA",40,2.4
+C3966,"Rapid City, SD MSA",40,1.6
+C3974,"Reading, PA MSA",40,1.5
+C3982,"Redding, CA MSA",40,3.7
+C3990,"Reno, NV MSA",40,0.5
+C4006,"Richmond, VA MSA",40,0.7
+C4014,"Riverside-San Bernardino-Ontario, CA MSA",40,1.1
+C4022,"Roanoke, VA MSA",40,1.8
+C4034,"Rochester, MN MSA",40,0.3
+C4038,"Rochester, NY MSA",40,0.1
+C4042,"Rockford, IL MSA",40,-1.0
+C4058,"Rocky Mount, NC MSA",40,-0.5
+C4066,"Rome, GA MSA",40,2.3
+C4090,"Sacramento-Roseville-Folsom, CA MSA",40,0.9
+C4098,"Saginaw, MI MSA",40,0.6
+C4106,"St. Cloud, MN MSA",40,-1.0
+C4110,"St. George, UT MSA",40,3.0
+C4114,"St. Joseph, MO-KS MSA",40,0.4
+C4118,"St. Louis, MO-IL MSA",40,-0.4
+C4142,"Salem, OR MSA",40,1.7
+C4150,"Salinas, CA MSA",40,-0.6
+C4154,"Salisbury, MD MSA",40,-0.6
+C4162,"Salt Lake City-Murray, UT MSA",40,1.4
+C4166,"San Angelo, TX MSA",40,-1.2
+C4170,"San Antonio-New Braunfels, TX MSA",40,0.2
+C4174,"San Diego-Chula Vista-Carlsbad, CA MSA",40,-0.4
+C4178,"Sandusky, OH MSA",40,-0.2
+C4186,"San Francisco-Oakland-Fremont, CA MSA",40,-1.6
+C4194,"San Jose-Sunnyvale-Santa Clara, CA MSA",40,0.4
+C4198,"San Juan-Bayamon-Caguas, PR MSA",40,0.6
+C4202,"San Luis Obispo-Paso Robles, CA MSA",40,0.0
+C4210,"Santa Cruz-Watsonville, CA MSA",40,0.2
+C4214,"Santa Fe, NM MSA",40,-1.4
+C4220,"Santa Maria-Santa Barbara, CA MSA",40,0.0
+C4222,"Santa Rosa-Petaluma, CA MSA",40,0.3
+C4234,"Savannah, GA MSA",40,1.0
+C4254,"Scranton--Wilkes-Barre, PA MSA",40,0.3
+C4266,"Seattle-Tacoma-Bellevue, WA MSA",40,-0.1
+C4268,"Sebastian-Vero Beach-West Vero Corridor, FL MSA",40,-0.2
+C4270,"Sebring, FL MSA",40,0.3
+C4310,"Sheboygan, WI MSA",40,0.3
+C4330,"Sherman-Denison, TX MSA",40,1.4
+C4334,"Shreveport-Bossier City, LA MSA",40,2.3
+C4342,"Sierra Vista-Douglas, AZ MSA",40,-1.8
+C4358,"Sioux City, IA-NE-SD MSA",40,0.0
+C4362,"Sioux Falls, SD-MN MSA",40,1.6
+C4364,"Slidell-Mandeville-Covington, LA MSA",40,0.7
+C4378,"South Bend-Mishawaka, IN-MI MSA",40,-0.4
+C4390,"Spartanburg, SC MSA",40,1.7
+C4406,"Spokane-Spokane Valley, WA MSA",40,0.4
+C4410,"Springfield, IL MSA",40,-1.8
+C4414,"Springfield, MA MSA",40,-1.3
+C4418,"Springfield, MO MSA",40,0.1
+C4422,"Springfield, OH MSA",40,-3.6
+C4430,"State College, PA MSA",40,1.4
+C4442,"Staunton-Stuarts Draft, VA MSA",40,3.7
+C4470,"Stockton-Lodi, CA MSA",40,1.7
+C4494,"Sumter, SC MSA",40,-1.7
+C4506,"Syracuse, NY MSA",40,1.6
+C4522,"Tallahassee, FL MSA",40,0.9
+C4530,"Tampa-St. Petersburg-Clearwater, FL MSA",40,-0.2
+C4546,"Terre Haute, IN MSA",40,0.5
+C4550,"Texarkana, TX-AR MSA",40,-0.6
+C4578,"Toledo, OH MSA",40,-0.8
+C4582,"Topeka, KS MSA",40,3.2
+C4590,"Traverse City, MI MSA",40,1.5
+C4594,"Trenton-Princeton, NJ MSA",40,-1.3
+C4606,"Tucson, AZ MSA",40,0.4
+C4614,"Tulsa, OK MSA",40,1.1
+C4622,"Tuscaloosa, AL MSA",40,-1.1
+C4630,"Twin Falls, ID MSA",40,1.4
+C4634,"Tyler, TX MSA",40,1.9
+C4652,"Urban Honolulu, HI MSA",40,0.2
+C4654,"Utica-Rome, NY MSA",40,0.5
+C4666,"Valdosta, GA MSA",40,-0.7
+C4670,"Vallejo, CA MSA",40,0.6
+C4702,"Victoria, TX MSA",40,-0.5
+C4722,"Vineland, NJ MSA",40,1.1
+C4726,"Virginia Beach-Chesapeake-Norfolk, VA-NC MSA",40,1.0
+C4730,"Visalia, CA MSA",40,-0.6
+C4738,"Waco, TX MSA",40,0.0
+C4746,"Walla Walla, WA MSA",40,-3.6
+C4758,"Warner Robins, GA MSA",40,0.2
+C4790,"Washington-Arlington-Alexandria, DC-VA-MD-WV MSA",40,-0.1
+C4793,"Waterbury-Shelton, CT MSA",40,-0.2
+C4794,"Waterloo-Cedar Falls, IA MSA",40,-1.2
+C4806,"Watertown-Fort Drum, NY MSA",40,-0.2
+C4814,"Wausau, WI MSA",40,-1.5
+C4826,"Weirton-Steubenville, WV-OH MSA",40,-0.9
+C4830,"Wenatchee-East Wenatchee, WA MSA",40,-0.3
+C4854,"Wheeling, WV-OH MSA",40,-1.4
+C4862,"Wichita, KS MSA",40,-0.3
+C4866,"Wichita Falls, TX MSA",40,-1.7
+C4868,"Wildwood-The Villages, FL MSA",40,2.9
+C4870,"Williamsport, PA MSA",40,-0.7
+C4890,"Wilmington, NC MSA",40,2.2
+C4902,"Winchester, VA-WV MSA",40,-1.3
+C4918,"Winston-Salem, NC MSA",40,-1.1
+C4934,"Worcester, MA MSA",40,-0.3
+C4942,"Yakima, WA MSA",40,0.2
+C4962,"York-Hanover, PA MSA",40,0.2
+C4966,"Youngstown-Warren, OH MSA",40,-0.8
+C4970,"Yuba City, CA MSA",40,-0.4
+C4974,"Yuma, AZ MSA",40,-2.3
