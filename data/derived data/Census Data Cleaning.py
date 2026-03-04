@@ -128,4 +128,5 @@ metro_data = metro_data[[
 # =============================================================================
 # 7. Output
 # =============================================================================
+metro_data.to_csv('data/derived data/metro_data.csv', index=False)
 print(metro_data.head())
