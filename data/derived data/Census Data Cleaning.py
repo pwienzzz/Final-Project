@@ -1,16 +1,9 @@
----
-title: "Final Project"
-format: 
----
-
-## Data Cleaning
-```{python}
 import pandas as pd
 
 # =============================================================================
 # 1. Clean income.csv
 # =============================================================================
-income = pd.read_csv('data/income.csv', header=1)
+income = pd.read_csv('data/raw data/income.csv', header=1)
 income = income.rename(columns={'Geography': 'GEO_ID', 'Geographic Area Name': 'NAME'})
 income = income[['GEO_ID', 'NAME',
                  "Estimate!!Total:!!Bachelor's degree",
@@ -25,7 +18,7 @@ income['graduate_degree'] = pd.to_numeric(income['graduate_degree'], errors='coe
 # =============================================================================
 # 2. Clean rent.csv
 # =============================================================================
-rent = pd.read_csv('data/rent.csv', header=1)
+rent = pd.read_csv('data/raw data/rent.csv', header=1)
 rent = rent.rename(columns={'Geography': 'GEO_ID', 'Geographic Area Name': 'NAME'})
 rent = rent.drop(columns=[c for c in rent.columns if 'Margin of Error' in str(c)])
 rent = rent.rename(columns={'Estimate!!Median gross rent': 'median_rent'})
@@ -35,7 +28,7 @@ rent = rent[['GEO_ID', 'median_rent']].copy()
 # =============================================================================
 # 3. Clean Travel Time to Work.csv
 # =============================================================================
-commute = pd.read_csv('data/Travel Time to Work.csv', header=1)
+commute = pd.read_csv('data/raw data/Travel Time to Work.csv', header=1)
 commute = commute.rename(columns={'Geography': 'GEO_ID', 'Geographic Area Name': 'NAME'})
 commute = commute.drop(columns=[c for c in commute.columns if 'Margin of Error' in str(c)])
 
@@ -69,7 +62,7 @@ commute = commute[['GEO_ID', 'avg_commute_time']].copy()
 # =============================================================================
 # 4. Clean Tenure by Occupants per Room.csv
 # =============================================================================
-tenure = pd.read_csv('data/Tenure by Occupants per Room.csv', header=1)
+tenure = pd.read_csv('data/raw data/Tenure by Occupants per Room.csv', header=1)
 tenure = tenure.rename(columns={'Geography': 'GEO_ID', 'Geographic Area Name': 'NAME'})
 tenure = tenure.drop(columns=[c for c in tenure.columns if 'Margin of Error' in str(c)])
 tenure = tenure.drop(columns=[c for c in tenure.columns if str(c).startswith('Unnamed')])
@@ -96,7 +89,7 @@ tenure = tenure[['GEO_ID', 'avg_occupants_per_room']].copy()
 # =============================================================================
 # 5. Clean Health Insurance Coverage.csv
 # =============================================================================
-health = pd.read_csv('data/Health Insurance Coverage.csv', header=1)
+health = pd.read_csv('data/raw data/Health Insurance Coverage.csv', header=1)
 health = health.rename(columns={'Geography': 'GEO_ID', 'Geographic Area Name': 'NAME'})
 health = health.drop(columns=[c for c in health.columns if 'Margin of Error' in str(c)])
 
@@ -135,5 +128,4 @@ metro_data = metro_data[[
 # =============================================================================
 # 7. Output
 # =============================================================================
-metro_data.head()
-```
+print(metro_data.head())
