@@ -1,0 +1,262 @@
+---
+title: "Three Dimensions of Urban Living"
+format: pdf
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{python}
+# ── Environment fix (PROJ db version conflict) ───────────────────────────────
+import os
+os.environ['PROJ_DATA'] = '/opt/miniconda3/envs/ps6env/share/proj'
+os.environ['PROJ_LIB']  = '/opt/miniconda3/envs/ps6env/share/proj'
+
+import warnings
+warnings.filterwarnings('ignore')
+
+import json
+import urllib.request
+import pandas as pd
+import geopandas as gpd
+import altair as alt
+import vl_convert as vlc
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+# ── Load datasets ─────────────────────────────────────────────────────────────
+metro_data = pd.read_csv('data/derived data/metro_data.csv')
+pollution  = pd.read_csv('data/derived data/pollution.csv')
+rpp        = pd.read_csv('data/derived data/BEA_Metro_RPP_2024_Clean.csv')
+emp        = pd.read_csv('data/derived data/Cleaned_MSA_Employment_Growth.csv')
+
+# ── Extract CBSA from GEO_ID ──────────────────────────────────────────────────
+metro_data['CBSA'] = metro_data['GEO_ID'].str[-5:]
+
+# ── Clean RPP ─────────────────────────────────────────────────────────────────
+rpp['CBSA'] = rpp['GeoFIPS'].str.replace('"', '', regex=False).str.strip()
+rpp_all = (rpp[rpp['Description'].str.strip() == 'RPPs: All items']
+           [['CBSA', '2024']]
+           .rename(columns={'2024': 'regional_price_parity'}))
+
+# ── Clean employment (BLS "C1018" → CBSA "10180") ────────────────────────────
+emp['CBSA'] = (emp['area_fips'].str[1:].astype(int) * 10).astype(str).str.zfill(5)
+emp_clean = (emp[['CBSA', 'oty_month3_emplvl_pct_chg']]
+             .rename(columns={'oty_month3_emplvl_pct_chg': 'employment_growth'}))
+
+# ── Master dataframe ──────────────────────────────────────────────────────────
+df = metro_data.merge(pollution[['GEO_ID', 'Median_AQI']], on='GEO_ID', how='left')
+df = df.merge(rpp_all,   on='CBSA', how='left')
+df = df.merge(emp_clean, on='CBSA', how='left')
+
+# ── Merge with CBSA shapefile, clip to continental US ─────────────────────────
+cbsa_shp = gpd.read_file('data/map/tl_2023_us_cbsa/tl_2023_us_cbsa.shp')
+map_df   = cbsa_shp.merge(df, left_on='CBSAFP', right_on='CBSA', how='left')
+map_df   = map_df.cx[-130:-60, 23:52].to_crs('EPSG:4326')
+map_df   = map_df.rename(columns={'NAME_y': 'metro_name'})
+
+# ── Fetch US state borders as inline GeoJSON (no runtime URL in vl_convert) ──
+_url = ('https://raw.githubusercontent.com/'
+        'PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
+with urllib.request.urlopen(_url, timeout=15) as _r:
+    states_features = json.loads(_r.read())['features']
+
+# ── Name cleaner ──────────────────────────────────────────────────────────────
+def _clean(name):
+    if pd.isna(name):
+        return ''
+    for s in [' Metro Area', ' Metropolitan Statistical Area',
+              ' Micropolitan Statistical Area']:
+        name = name.replace(s, '')
+    return name.strip()
+
+# ── Build Altair text table (top-10 ranked list) ──────────────────────────────
+def _table_chart(column, table_title, ascending, fmt_fn):
+    """Pure Altair mark_text table showing top-10 metros."""
+    top10 = (map_df[['metro_name', column]]
+             .dropna()
+             .sort_values(column, ascending=ascending)
+             .head(10)
+             .reset_index(drop=True))
+    top10['rank'] = [str(i + 1) for i in range(len(top10))]
+    top10['city'] = top10['metro_name'].apply(_clean).str[:22]
+    top10['val']  = top10[column].apply(fmt_fn)
+    top10['row']  = list(range(len(top10)))
+
+    src = alt.Data(values=top10[['rank', 'city', 'val', 'row']].to_dict('records'))
+
+    def col(field, w, align, header):
+        return (alt.Chart(src)
+                .mark_text(align=align, baseline='middle',
+                           fontSize=9.5, color='#222222',
+                           dx=3 if align == 'left' else (-3 if align == 'right' else 0))
+                .encode(y=alt.Y('row:O', axis=None), text=f'{field}:N')
+                .properties(width=w, height=310,
+                            title=alt.TitleParams(text=header, fontSize=10,
+                                                  fontWeight='bold', color='#444')))
+
+    table = alt.hconcat(
+        col('rank', 22,  'center', '#'),
+        col('city', 158, 'left',   'Metro Area'),
+        col('val',  72,  'right',  'Value'),
+        spacing=1
+    ).properties(
+        title=alt.TitleParams(text=table_title, fontSize=11,
+                              fontWeight='bold', anchor='start', dy=-8)
+    )
+    return table
+
+
+# ── Build full chart: choropleth + state borders + top-10 table ───────────────
+def make_chart(column, map_title, scheme, ascending, table_title, fmt_fn):
+    plot_df  = map_df[map_df[column].notna()].copy()
+    geo_cols = ['CBSAFP', 'metro_name', column, 'geometry']
+    geo_feat = json.loads(plot_df[geo_cols].to_json())['features']
+
+    cbsa_data  = alt.Data(values=geo_feat)
+    state_data = alt.Data(values=states_features)
+
+    choropleth = (
+        alt.Chart(cbsa_data)
+        .mark_geoshape(stroke='white', strokeWidth=0.1)
+        .encode(
+            color=alt.Color(
+                f'properties.{column}:Q',
+                scale=alt.Scale(scheme=scheme),
+                legend=alt.Legend(title=map_title, orient='bottom',
+                                  gradientLength=260,
+                                  labelFontSize=8.5, titleFontSize=9.5)
+            ),
+            tooltip=[
+                alt.Tooltip('properties.metro_name:N', title='Metro Area'),
+                alt.Tooltip(f'properties.{column}:Q',  title='Value', format='.2f'),
+            ]
+        )
+        .project(type='albersUsa')
+        .properties(width=600, height=380)
+    )
+
+    borders = (
+        alt.Chart(state_data)
+        .mark_geoshape(fill=None, stroke='black', strokeWidth=0.5)
+        .project(type='albersUsa')
+        .properties(width=600, height=380)
+    )
+
+    table = _table_chart(column, table_title, ascending, fmt_fn)
+
+    return (
+        alt.hconcat(choropleth + borders, table, spacing=22)
+        .configure_view(stroke=None)
+    )
+
+
+# ── Save chart PNG (overwrites previous file) ─────────────────────────────────
+def save_chart(column, map_title, scheme, ascending, table_title, fmt_fn):
+    chart = make_chart(column, map_title, scheme, ascending, table_title, fmt_fn)
+    png   = vlc.vegalite_to_png(chart.to_json(), scale=2.0)
+    path  = f'data/derived data/chart_{column}.png'
+    with open(path, 'wb') as f:
+        f.write(png)
+
+# ── Display helper (matplotlib used only to embed PNG in PDF output) ───────────
+def show(column):
+    path = f'data/derived data/chart_{column}.png'
+    img  = mpimg.imread(path)
+    h, w = img.shape[:2]
+    fig, ax = plt.subplots(figsize=(14, 14 * h / w))
+    ax.imshow(img)
+    ax.axis('off')
+    plt.tight_layout(pad=0)
+    plt.show()
+    plt.close()
+
+
+# ── Generate all 8 charts ─────────────────────────────────────────────────────
+specs = [
+    # (column, map_title, scheme, ascending, table_title, fmt_fn)
+    ('bachelor_degree',
+     "Median Earnings – Bachelor's Degree (USD)", 'viridis', False,
+     'Top 10 — Highest Earnings',
+     lambda x: f"${x:,.0f}"),
+
+    ('employment_growth',
+     'Employment Growth Rate (%)', 'blueorange', False,
+     'Top 10 — Fastest Growing',
+     lambda x: f"{x:+.1f}%"),
+
+    ('median_rent',
+     'Median Gross Rent (USD)', 'oranges', True,
+     'Top 10 — Lowest Rent',
+     lambda x: f"${x:,.0f}"),
+
+    ('regional_price_parity',
+     'Regional Price Parity (US avg = 100)', 'reds', True,
+     'Top 10 — Most Affordable',
+     lambda x: f"{x:.1f}"),
+
+    ('avg_occupants_per_room',
+     'Average Occupants per Room', 'reds', True,
+     'Top 10 — Least Crowded',
+     lambda x: f"{x:.3f}"),
+
+    ('insurance_coverage_rate',
+     'Health Insurance Coverage Rate', 'greens', False,
+     'Top 10 — Best Coverage',
+     lambda x: f"{x:.1%}"),
+
+    ('Median_AQI',
+     'Median Air Quality Index (2024)', 'reds', True,
+     'Top 10 — Cleanest Air',
+     lambda x: f"{x:.0f}"),
+
+    ('avg_commute_time',
+     'Average Commute Time (minutes)', 'purples', True,
+     'Top 10 — Shortest Commute',
+     lambda x: f"{x:.1f} min"),
+]
+
+for col, map_title, scheme, asc, tbl_title, fmt_fn in specs:
+    save_chart(col, map_title, scheme, asc, tbl_title, fmt_fn)
+```
+
+# Three Dimensions of Urban Living
+
+## Economic Opportunity
+
+```{python}
+show('bachelor_degree')
+```
+
+```{python}
+show('employment_growth')
+```
+
+## Cost of Living
+
+```{python}
+show('median_rent')
+```
+
+```{python}
+show('regional_price_parity')
+```
+
+## Living Environment
+
+```{python}
+show('avg_occupants_per_room')
+```
+
+```{python}
+show('insurance_coverage_rate')
+```
+
+```{python}
+show('Median_AQI')
+```
+
+```{python}
+show('avg_commute_time')
+```
