@@ -2,10 +2,12 @@ import os
 import pathlib
 
 _HERE = pathlib.Path(__file__).parent
-_DATA = _HERE / "Final-Project" / "data"
+_DATA = _HERE / "data"
 
-os.environ["PROJ_DATA"] = "/opt/miniconda3/envs/dap311/share/proj"
-os.environ["PROJ_LIB"]  = "/opt/miniconda3/envs/dap311/share/proj"
+_proj_path = "/opt/miniconda3/envs/dap311/share/proj"
+if os.path.exists(_proj_path):
+    os.environ["PROJ_DATA"] = _proj_path
+    os.environ["PROJ_LIB"]  = _proj_path
 
 import warnings
 warnings.filterwarnings("ignore")
