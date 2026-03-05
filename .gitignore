@@ -209,8 +209,5 @@ __marimo__/
 # Large shapefiles (downloaded at runtime)
 data/shapefiles/
 
-# Generated output files
-output/
-
 # macOS
 .DS_Store
