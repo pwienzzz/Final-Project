@@ -1,0 +1,69 @@
+---
+title: "An Attractive Index: Evaluating Urban Attractiveness for Graduates"
+format:
+  pdf:
+    fontsize: 10pt
+    geometry:
+      - top=15mm
+      - bottom=15mm
+      - left=18mm
+      - right=18mm
+execute:
+  echo: false
+---
+
+**Group Members:**
+Peiwen Zhang (GitHub: `pwienzzz`) | Han Zhang (GitHub: `hanz12138`)
+
+---
+
+## Research Question
+
+Which U.S. metropolitan areas are most attractive for recent college graduates, considering economic opportunity, cost of living, and quality of life? Rather than relying on a single metric, we construct a composite index that allows individuals to weight these three dimensions according to their own priorities.
+
+## Approach and Coding
+
+We assembled five datasets covering U.S. metropolitan statistical areas (MSAs):
+
+- **Census ACS** – median income by educational attainment, median rent, commute time, health insurance coverage, and occupants per room (`metro_data.csv`)
+- **EPA AQI** – annual median Air Quality Index by CBSA (`pollution.csv`)
+- **BEA Regional Price Parities** – cost-of-living index for each metro (`BEA_Metro_RPP_2024_Clean.csv`)
+- **BLS Quarterly Census of Employment and Wages** – year-over-year employment growth (`Cleaned_MSA_Employment_Growth.csv`)
+- **Census TIGER/Line Shapefiles** – CBSA boundaries for spatial visualization
+
+All datasets were cleaned in Python (`pandas`) and merged on CBSA codes. A key challenge was aligning CBSA identifiers across sources: BLS uses a format requiring numeric transformation (`area_fips[1:] × 10`), BEA embeds quotes in `GeoFIPS`, and the Census uses a 5-character string in `GEO_ID`. After harmonizing these keys, we had a merged dataset of approximately 900 metro areas.
+
+Each indicator was standardized using z-scores. Indicators where a higher raw value represents a worse outcome (rent, price parity, AQI, commute time, occupants per room) were negated so that higher z-scores consistently indicate better outcomes. Three sub-scores were computed:
+
+- **Economic Opportunity** = average of income z-score and employment growth z-score
+- **Affordability** = average of rent z-score and price parity z-score
+- **Quality of Life** = average of AQI, commute time, insurance coverage, and occupants-per-room z-scores
+
+A **Final Attractiveness Score** is a weighted average of these three sub-scores, with user-defined weights.
+
+**Difficulties encountered:** Employment growth data was missing for a meaningful share of metros, reducing coverage for the opportunity dimension. AQI data was also incomplete for smaller MSAs. Additionally, deploying `geopandas` on Streamlit Cloud required managing system-level GDAL dependencies that differ from our local conda environment.
+
+## Static Visualizations
+
+The three choropleth maps below display each sub-score across the continental U.S., alongside a top-10 ranked table.
+
+![Economic Opportunity Score across U.S. metro areas. Higher scores (darker) reflect higher median incomes for bachelor's degree holders and stronger employment growth. Metros in the Northeast and West Coast cluster at the top, while much of the rural South and Midwest score lower.](data/derived data/index_economic_opportunity_score.png){width=65%}
+
+![Affordability Score across U.S. metro areas. Higher scores indicate lower rent and lower regional price parity (cheaper cost of living). The most affordable metros are concentrated in the Midwest and parts of the South — a direct counterpoint to the opportunity map above, illustrating the classic opportunity–affordability tradeoff.](data/derived data/index_living_expense_score.png){width=65%}
+
+![Quality of Life Score across U.S. metro areas. Higher scores reflect cleaner air, shorter commutes, higher insurance coverage, and less overcrowding. Mid-sized Midwestern and Northern metros tend to perform well, while large coastal metros are penalized by longer commutes and denser housing.](data/derived data/index_living_conditions_score.png){width=65%}
+
+Together, the three maps reveal that no single metro dominates all dimensions — a finding that motivates the interactive, user-weighted approach of our Streamlit app.
+
+## Streamlit App
+
+The Streamlit app allows users to interactively explore the index at [https://hanz12138-final-project-app-2yhvvy.streamlit.app](https://hanz12138-final-project-app-2yhvvy.streamlit.app).
+
+The sidebar lets users distribute weights across the three dimensions using sliders (automatically normalized to 100%). The app contains four main components:
+
+1. **Pydeck Bubble Map** – each metro area is rendered as a bubble whose size reflects the final attractiveness score under the current weights. Color encodes a user-selected metric (score, income, rent, or AQI). Red rings highlight the top-N leaderboard cities.
+2. **Attractiveness Leaderboard** – a horizontal bar chart of the top-N metro areas ranked by final score.
+3. **City Metrics Table** – a scrollable table showing raw indicator values for the top-N cities.
+4. **City Profile & Radar Chart** – selecting a city from the sidebar displays its five scores and a radar chart comparing its three sub-dimension scores.
+
+The app directly addresses our research question by letting each user define what "attractive" means to them. A user who prioritizes affordability will see a completely different ranking than one who prioritizes economic opportunity — making the index personalized rather than prescriptive.
