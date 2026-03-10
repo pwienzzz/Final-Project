@@ -1,0 +1,10 @@
+pandas
+numpy
+geopandas
+altair
+vl-convert-python
+matplotlib
+jupyter
+nbformat
+nbclient
+requests

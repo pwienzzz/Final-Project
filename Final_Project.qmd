@@ -1,12 +1,35 @@
 ---
-title: "Urban Opportunity, Cost, and Living Conditions Index"
-format: pdf
+title: "An Attractive Index: Evaluating Urban Attractiveness for Graduates"
+format:
+  pdf:
+    fontsize: 10pt
+    geometry:
+      - top=15mm
+      - bottom=15mm
+      - left=18mm
+      - right=18mm
 execute:
-  echo: true
+  echo: false
+  output: false
 ---
 
+**Group Members:** Peiwen Zhang (GitHub: `pwienzzz`) | Han Zhang (GitHub: `hanz12138`)
+
+## Research Question
+
+Which U.S. metropolitan areas are most attractive for recent college graduates, considering economic opportunity, cost of living, and quality of life? Rather than relying on a single fixed metric, we construct a composite index that allows individuals to weight these three dimensions according to their own priorities — recognizing that a graduate prioritizing career growth has fundamentally different needs than one optimizing for affordability or livability.
+
+## Approach and Coding
+
+We assembled five datasets covering U.S. metropolitan statistical areas (MSAs): **Census ACS** (median income by educational attainment, median rent, commute time, health insurance coverage, occupants per room), **EPA AQI** (annual median Air Quality Index), **BEA Regional Price Parities** (cost-of-living index), **BLS QCEW** (year-over-year employment growth), and **Census TIGER/Line Shapefiles** (CBSA boundaries).
+
+All datasets were cleaned in Python (`pandas`) and merged on CBSA codes. A key challenge was harmonizing identifiers across sources: BLS uses a format requiring numeric transformation (`area_fips[1:] × 10`), BEA embeds quotes in `GeoFIPS`, and the Census uses a 5-character string in `GEO_ID`. After harmonizing, we obtained a merged dataset of approximately 900 metro areas.
+
+Each indicator was standardized using z-scores. Indicators where a higher raw value represents a worse outcome (rent, price parity, AQI, commute time, occupants per room) were negated so higher z-scores consistently indicate better outcomes. Three sub-scores were computed: **Economic Opportunity** (average of income and employment growth z-scores), **Affordability** (average of rent and price parity z-scores), and **Quality of Life** (average of AQI, commute time, insurance coverage, and occupants-per-room z-scores). A **Final Attractiveness Score** is their weighted average with user-defined weights.
+
+**Difficulties encountered:** Employment growth and AQI data were missing for a meaningful share of smaller metros. Deploying `geopandas` on Streamlit Cloud required managing system-level GDAL dependencies that differ from the local conda environment.
+
 ```{python}
-# ── Fix PROJ database conflict before importing geopandas ────────────────────
 import os
 os.environ['PROJ_DATA'] = '/opt/miniconda3/envs/ps6env/share/proj'
 os.environ['PROJ_LIB']  = '/opt/miniconda3/envs/ps6env/share/proj'
@@ -30,32 +53,23 @@ except ImportError:
     pass  # seaborn not available in this environment
 ```
 
-# Urban Index Construction
-
-## Data Loading
-
 ```{python}
-# ── Load census indicator datasets ───────────────────────────────────────────
 metro_data = pd.read_csv('data/derived data/metro_data.csv')
 pollution  = pd.read_csv('data/derived data/pollution.csv')
 rpp        = pd.read_csv('data/derived data/BEA_Metro_RPP_2024_Clean.csv')
 emp        = pd.read_csv('data/derived data/Cleaned_MSA_Employment_Growth.csv')
 
-# ── Extract CBSA code from GEO_ID (last 5 characters) ───────────────────────
 metro_data['CBSA'] = metro_data['GEO_ID'].str[-5:]
 
-# ── Clean and merge RPP (keep "RPPs: All items" row per CBSA) ────────────────
 rpp['CBSA'] = rpp['GeoFIPS'].str.replace('"', '', regex=False).str.strip()
 rpp_all = (rpp[rpp['Description'].str.strip() == 'RPPs: All items']
            [['CBSA', '2024']]
            .rename(columns={'2024': 'regional_price_parity'}))
 
-# ── Clean and merge employment (BLS "C1018" → CBSA "10180") ─────────────────
 emp['CBSA'] = (emp['area_fips'].str[1:].astype(int) * 10).astype(str).str.zfill(5)
 emp_clean = (emp[['CBSA', 'oty_month3_emplvl_pct_chg']]
              .rename(columns={'oty_month3_emplvl_pct_chg': 'employment_growth'}))
 
-# ── Merge all datasets on GEO_ID ─────────────────────────────────────────────
 df = metro_data.merge(pollution[['GEO_ID', 'Median_AQI']], on='GEO_ID', how='left')
 df = df.merge(rpp_all,   on='CBSA', how='left')
 df = df.merge(emp_clean, on='CBSA', how='left')
@@ -64,58 +78,41 @@ print(f"Dataset shape: {df.shape}")
 print(f"Columns: {list(df.columns)}")
 ```
 
-## Z-Score Standardization
-
 ```{python}
-# ── Helper: compute z-score using (X - μ) / σ ────────────────────────────────
 def z_score(series):
     return (series - series.mean()) / series.std()
 
-# ── Economic Opportunity indicators ──────────────────────────────────────────
 df['income_z']            = z_score(df['bachelor_degree'])
 df['employment_growth_z'] = z_score(df['employment_growth'])
 
-# ── Living Expense indicators ─────────────────────────────────────────────────
 df['rent_z']          = z_score(df['median_rent'])
 df['price_parity_z']  = z_score(df['regional_price_parity'])
 
-# ── Living Conditions indicators ──────────────────────────────────────────────
 df['AQI_z']               = z_score(df['Median_AQI'])
 df['commute_time_z']      = z_score(df['avg_commute_time'])
 df['insurance_z']         = z_score(df['insurance_coverage_rate'])
 df['occupants_per_room_z']= z_score(df['avg_occupants_per_room'])
 ```
 
-## Reverse Negative Indicators
-
-Higher z-score should always mean *better* outcome. Reverse indicators where
-a larger raw value represents a worse situation.
-
 ```{python}
-# ── Reverse: higher raw value = worse outcome ─────────────────────────────────
-df['rent_z']               = -df['rent_z']           # lower rent = better
-df['price_parity_z']       = -df['price_parity_z']   # lower cost = better
-df['AQI_z']                = -df['AQI_z']             # lower AQI = cleaner air
-df['commute_time_z']       = -df['commute_time_z']    # shorter commute = better
-df['occupants_per_room_z'] = -df['occupants_per_room_z']  # less crowded = better
+df['rent_z']               = -df['rent_z']
+df['price_parity_z']       = -df['price_parity_z']
+df['AQI_z']                = -df['AQI_z']
+df['commute_time_z']       = -df['commute_time_z']
+df['occupants_per_room_z'] = -df['occupants_per_room_z']
 ```
 
-## Composite Index Construction
-
 ```{python}
-# ── Economic Opportunity Score ────────────────────────────────────────────────
 df['economic_opportunity_score'] = (
     df['income_z'] +
     df['employment_growth_z']
 ) / 2
 
-# ── Living Expense Score ──────────────────────────────────────────────────────
 df['living_expense_score'] = (
     df['rent_z'] +
     df['price_parity_z']
 ) / 2
 
-# ── Living Conditions Score ───────────────────────────────────────────────────
 df['living_conditions_score'] = (
     df['AQI_z'] +
     df['commute_time_z'] +
@@ -123,23 +120,18 @@ df['living_conditions_score'] = (
     df['occupants_per_room_z']
 ) / 4
 
-# ── Preview ───────────────────────────────────────────────────────────────────
 score_cols = ['economic_opportunity_score',
               'living_expense_score',
               'living_conditions_score']
 print(df[['NAME'] + score_cols].dropna().head(8).to_string(index=False))
 ```
 
-## Map Preparation
-
 ```{python}
-# ── Load CBSA shapefile, merge, clip to continental US ───────────────────────
 cbsa_shp = gpd.read_file('data/map/tl_2023_us_cbsa/tl_2023_us_cbsa.shp')
 map_df   = cbsa_shp.merge(df, left_on='CBSAFP', right_on='CBSA', how='left')
 map_df   = map_df.cx[-130:-60, 23:52].to_crs('EPSG:4326')
 map_df   = map_df.rename(columns={'NAME_y': 'metro_name'})
 
-# ── Fetch US state borders as inline GeoJSON ─────────────────────────────────
 _url = ('https://raw.githubusercontent.com/'
         'PublicaMundi/MappingAPI/master/data/geojson/us-states.json')
 with urllib.request.urlopen(_url, timeout=15) as _r:
@@ -147,8 +139,6 @@ with urllib.request.urlopen(_url, timeout=15) as _r:
 
 print(f"Map GeoDataFrame: {len(map_df)} CBSA regions")
 ```
-
-## Visualization Functions
 
 ```{python}
 def _clean(name):
@@ -258,39 +248,34 @@ def save_and_show(column, map_title, table_title, scheme='viridis'):
     plt.close()
 ```
 
-## Economic Opportunity
+## Static Visualizations
 
-Higher score indicates higher median earnings and stronger employment growth.
+The three choropleth maps below display each sub-score across continental U.S. metros alongside a top-10 ranked table. Higher scores (darker shading) always indicate better outcomes.
 
-```{python}
-save_and_show(
-    'economic_opportunity_score',
-    'Economic Opportunity Score',
-    'Top 10 — Economic Opportunity'
-)
-```
+**Economic Opportunity** — median income for bachelor's degree holders + employment growth z-scores.
 
-## Living Expense
+![](data/derived data/index_economic_opportunity_score.png){width=70%}
 
-Higher score indicates lower cost of living (rent and regional price parity).
+The top-10 is dominated by technology and knowledge-economy hubs. San Jose–Sunnyvale–Santa Clara ranks first by a wide margin, reflecting Silicon Valley's high wages and sustained employment growth; San Francisco–Oakland–Fremont also appears. Outside California, Raleigh–Cary (NC) and Austin–Round Rock (TX) rank highly as fast-growing Sun Belt tech corridors, while Hartford–West Hartford (CT) benefits from insurance and finance employment. One notable outlier is Hanford–Corcoran (CA, rank 2) — an agricultural San Joaquin Valley metro whose high score reflects strong employment growth rather than high wages, illustrating how averaging two z-scores can surface metros with uneven profiles. Geographically, the map is bimodal: coasts and Sun Belt corridors score high while rural Appalachia, the Deep South, and the Great Plains score consistently below the national average.
 
-```{python}
-save_and_show(
-    'living_expense_score',
-    'Living Expense Score',
-    'Top 10 — Most Affordable'
-)
-```
+**Affordability** — lower rent + lower regional price parity (both negated so higher = cheaper).
 
-## Living Conditions
+![](data/derived data/index_living_expense_score.png){width=70%}
 
-Higher score indicates cleaner air, shorter commute, better insurance
-coverage, and less overcrowding.
+The affordability map is nearly a photographic negative of the opportunity map. All top-10 metros come from the rural South and southern Plains — Johnstown (PA), Eagle Pass (TX), Florence–Muscle Shoals (AL), Dothan (AL), Monroe (LA), Gadsden (AL), Enid (OK), Texarkana (TX-AR), and Fort Smith (AR-OK) — with median rents often below \$800/month and regional price parities in the 80–90 range (U.S. average = 100). The coastal metros that led on opportunity sit at the bottom here: San Jose and San Francisco have median rents exceeding \$2,000/month and price parities above 130. This divergence illustrates the core opportunity–affordability tradeoff motivating the project — wage premiums in expensive markets are partially or fully offset by elevated living costs.
 
-```{python}
-save_and_show(
-    'living_conditions_score',
-    'Living Conditions Score',
-    'Top 10 — Best Living Conditions'
-)
-```
+**Quality of Life** — clean air + short commutes + insurance coverage + low overcrowding.
+
+![](data/derived data/index_living_conditions_score.png){width=70%}
+
+The quality-of-life map reveals a third distinct geography. Top metros — Bozeman (MT), Utica–Rome (NY), Pittsfield (MA), Sheboygan (WI), Altoona (PA), Bismarck (ND), Appleton (WI), Wausau (WI) — are almost entirely small to mid-sized metros in the Upper Midwest, Mountain West, and rural Northeast. They benefit from clean air (low industrial activity), short commutes (compact labor markets), high insurance coverage, and low housing density. Large metros perform poorly: Los Angeles is penalized by some of the nation's worst AQI and longest commutes; Houston and Dallas suffer from long commutes and below-average insurance coverage. Sun Belt boomtowns like Austin, despite scoring well on opportunity, already show quality-of-life strain from rapid population growth outpacing infrastructure.
+
+Taken together, the three maps identify largely non-overlapping sets of "winning" metros depending on what one values — no single metro dominates all three dimensions — which directly motivates the interactive, user-weighted Streamlit app.
+
+## Streamlit App
+
+The app is live at [https://hanz12138-final-project-app-2yhvvy.streamlit.app](https://hanz12138-final-project-app-2yhvvy.streamlit.app). A static equally-weighted ranking would impose one fixed set of priorities on every reader, obscuring the trade-offs the maps reveal. Instead, sidebar sliders let users distribute weights across the three dimensions (automatically normalized to 100%), and the entire app recomputes instantly — making the subjectivity of the index explicit and transparent rather than hidden in a formula.
+
+The app contains four components. (1) **Pydeck Bubble Map**: each metro is rendered as a WebGL bubble where size encodes the final attractiveness score under current weights and color encodes a user-switchable metric (income, rent, AQI, or composite score), letting users cross-examine two variables simultaneously; red rings overlay the top-N leaderboard cities. (2) **Attractiveness Leaderboard**: a horizontal Plotly bar chart of the top-N metros — horizontal orientation was chosen because metro names are too long for a rotated x-axis. (3) **City Metrics Table**: a scrollable HTML table showing raw indicator values (dollar amounts, minutes, percentages) alongside rankings, grounding the z-score index in concrete comparisons a graduate can act on. (4) **City Profile & Radar Chart**: a Plotly `Scatterpolar` chart plots each city's three sub-dimension scores on a globally fixed radial axis, so the polygon shape gives an intuitive sense of all-round strength versus dimensional trade-offs, with numeric metric cards alongside for precision.
+
+All four components share the same `compute_scores` function and are recomputed on every slider change — there is no caching of pre-ranked results — ensuring internal consistency across the entire dashboard.
