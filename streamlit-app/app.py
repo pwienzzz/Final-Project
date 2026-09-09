@@ -23,7 +23,7 @@ import numpy as np
 import geopandas as gpd
 import pydeck as pdk
 import plotly.graph_objects as go
-import matplotlib.cm as mcm
+import matplotlib as mpl
 from matplotlib.colors import Normalize
 import plotly.express as px
 
@@ -64,7 +64,7 @@ def value_to_rgba(series, cmap_name="YlGnBu", alpha=200, invert=False):
     """Convert a numeric Series to a list of [R, G, B, A] for pydeck."""
     filled = series.fillna(series.median())
     norm   = Normalize(vmin=filled.min(), vmax=filled.max())
-    cmap   = mcm.get_cmap(cmap_name)
+    cmap   = mcm.colormaps.get_cmap(cmap_name)
     result = []
     for v in series:
         if pd.isna(v):
